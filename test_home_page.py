@@ -14,4 +14,6 @@ class TestHomePage(TestCase):
 
     def test_navigate(self):
         self.page.navigate()
+        self.page.accept_button().click()
+
         assert "Allegro" in self.driver.title
