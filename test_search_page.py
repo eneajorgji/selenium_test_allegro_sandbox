@@ -17,11 +17,44 @@ class TestSearchPage(TestCase):
 
     def test_search_success(self):
         self.page.navigate()
-        self.page.accept_button()
-        self.page.search_text_box().send_keys("Telefon" + Keys.ENTER)
+        self.page.search_text_box().send_keys("Telefon")
         self.page.search_button().click()
 
         assert self.page.has_offers()
 
     def test_search_fail(self):
+        self.page.navigate()
+        self.page.search_text_box().send_keys("aaabb")
+        self.page.search_button().click()
+
+        assert not self.page.has_offers()
+
+    def test_search_success_category(self):
+        self.page.navigate()
+        self.page.search_text_box().send_keys("Laptop")
+        self.page.search_combo_box().select_by_value("/kategoria/elektronika")
+        self.page.search_button().click()
+
+        assert self.page.has_offers()
+
+    def test_fail_category(self):
+        pass
+
+    def test_search_user_fail(self):
+        self.page.navigate()
+        self.page.search_text_box().send_keys("Janusz Selenium")
+        self.page.search_combo_box().select_by_visible_text("Użytkownicy")
+        self.page.search_button().click()
+
+        assert self.page.is_user_not_found()
+
+    def test_search_user_success(self):
+        self.page.navigate()
+        self.page.search_text_box().send_keys("janusz")
+        self.page.search_combo_box().select_by_visible_text("Użytkownicy")
+        self.page.search_button().click()
+
+        assert not self.page.has_offers()
+
+    def test_search_many_success(self):
         pass
