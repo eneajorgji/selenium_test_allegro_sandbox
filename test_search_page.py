@@ -38,7 +38,12 @@ class TestSearchPage(TestCase):
         assert self.page.has_offers()
 
     def test_fail_category(self):
-        pass
+        self.page.navigate()
+        self.page.search_text_box().send_keys("aaaabbbb")
+        self.page.search_combo_box().select_by_value("/kategoria/elektronika")
+        self.page.search_button().click()
+
+        assert not self.page.has_offers()
 
     def test_search_user_fail(self):
         self.page.navigate()
