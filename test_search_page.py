@@ -1,7 +1,5 @@
 from unittest import TestCase
 
-from selenium.webdriver.common.keys import Keys
-
 from driver import Driver
 from search_page import SearchPage
 
@@ -61,5 +59,9 @@ class TestSearchPage(TestCase):
 
         assert not self.page.has_offers()
 
-    def test_search_many_success(self):
-        pass
+    def test_search_many_success(self):  # szukaj wiele
+        self.page.navigate()
+        self.page.maximize()
+        self.page.search_many_link().click()
+        self.page.input_0_search_many().send_keys("Telefon")
+        self.page.input_1_search_many().send_keys("Komputer")
