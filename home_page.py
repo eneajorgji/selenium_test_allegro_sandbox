@@ -21,9 +21,11 @@ class HomePage:
     def find(self, path):
         return self.driver.find_element_by_css_selector(path)
 
+    # Check
     def find_and_wait_for_visible(self, path):
         return self._find_and_wait(path, expected_conditions.visibility_of_element_located)
 
+    # Check
     def find_and_wait_for_clickable(self, path):
         return self._find_and_wait(path, expected_conditions.element_to_be_clickable)
 
