@@ -1,7 +1,7 @@
 from unittest import TestCase
+from selenium.webdriver.common.keys import Keys
 from driver import Driver
 from search_many_page import SearchManyPage
-from time import time
 
 
 class TestSearchManyPage(TestCase):
@@ -19,7 +19,7 @@ class TestSearchManyPage(TestCase):
         self.page.search_many_input(1).send_keys("komputer")
         self.page.search_many_button().click()
 
-        assert self.page.has_multi_offers()
+        assert self.page.has_offers()
 
     def test_search_many_five_option_success(self):
         self.page.navigate()
@@ -29,6 +29,11 @@ class TestSearchManyPage(TestCase):
 
         for i in range(3):
             self.page.search_many_additional_button().click()
-            self.page.search_many_input(2 + i).send_keys("aaa")
+            self.page.search_many_input(2 + i).send_keys("aaa" + Keys.ESCAPE)
 
+        self.page.search_many_input(2).clear()
+        self.page.search_many_remove_button(4).click()
+        self.page.search_many_remove_button(3).click()
         self.page.search_many_button().click()
+
+        assert self.page.has_offers()
