@@ -37,6 +37,4 @@ class TestItemPage(TestCase):
 
         assert self.page.added_to_chart_label()
 
-        # for i in range(3):
-        #     self.page.search_many_additional_button().click()
-        #     self.page.search_many_input(2 + i).send_keys("aaa" + Keys.ESCAPE)
+

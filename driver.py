@@ -7,5 +7,5 @@ class Driver:
         options = webdriver.ChromeOptions()
         options.add_argument("--start-maximized")
         driver = webdriver.Chrome(chrome_options=options)
-        driver.implicitly_wait(10)  # will wait for 10 sec if there is no elements
+        driver.implicitly_wait(10)
         return driver
