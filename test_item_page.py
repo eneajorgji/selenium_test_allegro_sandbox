@@ -3,7 +3,7 @@ from driver import Driver
 from search_page import SearchPage
 from item_page import ItemPage
 from home_page import HomePage
-
+from time import time
 
 class TestItemPage(TestCase):
     def setUp(self):
@@ -30,11 +30,18 @@ class TestItemPage(TestCase):
         self.page = self.__get_item_page(6442736754)
         self.page.navigate()
 
-        for i in range(4):
+        for item in range(5):
             self.page.add_another_item().click()
+
+        for item in range(2):
+            self.page.remove_item().click()
 
         self.page.add_to_chart_label().click()
 
         assert self.page.added_to_chart_label()
 
-
+    def test_add_to_favorite(self):
+        self.page = self.__get_item_page(6442736754)
+        self.page.navigate()
+        self.page.search_button_favorite().click()
+        self.page.tim().sleep(10)
