@@ -5,6 +5,7 @@ from item_page import ItemPage
 from home_page import HomePage
 from time import time
 
+
 class TestItemPage(TestCase):
     def setUp(self):
         self.driver = Driver.create()
@@ -16,8 +17,7 @@ class TestItemPage(TestCase):
         self.page = self.__get_item_page(6442736754)
         self.page.navigate()
 
-    def __get_item_page(self, id):
-        return ItemPage(self.driver, id)
+    # TODO: dodać assert
 
     def test_add_to_cart_success(self):
         self.page = self.__get_item_page(6442736754)
@@ -44,4 +44,6 @@ class TestItemPage(TestCase):
         self.page = self.__get_item_page(6442736754)
         self.page.navigate()
         self.page.search_button_favorite().click()
-        self.page.tim().sleep(10)
+
+    def __get_item_page(self, id):
+        return ItemPage(self.driver, id)
