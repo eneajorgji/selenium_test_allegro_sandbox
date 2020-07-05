@@ -12,7 +12,7 @@ class ItemPage(HomePage):
         self.accept_button().click()
 
     def title_label(self):
-        return "Xiaomi Redmi Note 64 GB"
+        pass
 
     def price_label(self):
         pass
