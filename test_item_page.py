@@ -17,7 +17,7 @@ class TestItemPage(TestCase):
         self.page = self.__get_item_page(6442736754)
         self.page.navigate()
 
-    # TODO: dodać assert
+        assert self.page.title_label()
 
     def test_add_to_cart_success(self):
         self.page = self.__get_item_page(6442736754)
