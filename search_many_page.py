@@ -1,7 +1,5 @@
 from search_page import SearchPage
 from selenium import webdriver
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support import expected_conditions
 
 
 class SearchManyPage(SearchPage):
