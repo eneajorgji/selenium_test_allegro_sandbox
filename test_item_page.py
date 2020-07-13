@@ -1,9 +1,7 @@
 from unittest import TestCase
 from driver import Driver
-from search_page import SearchPage
 from item_page import ItemPage
-from home_page import HomePage
-from time import time
+
 
 class TestItemPage(TestCase):
     def setUp(self):
