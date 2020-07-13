@@ -1,5 +1,4 @@
 from unittest import TestCase
-
 from driver import Driver
 from login_page import LoginPage
 from configuration import USER_NAME, PASSWORD
