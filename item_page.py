@@ -1,46 +1,52 @@
 from selenium import webdriver
-from home_page import HomePage
+from login_page import LoginPage
 
 
-class ItemPage(HomePage):
-    def __init__(self, driver: webdriver.Chrome, id):  # id item
-        HomePage.__init__(self, driver)
+class ItemPage(LoginPage):
+    def __init__(self, driver: webdriver.Chrome, user_name, password, id):
+        LoginPage.__init__(self, driver, user_name, password)
         self.id = id
 
     def navigate(self):
         self.driver.get(f"https://allegro.pl.allegrosandbox.pl/oferta/{self.id}")
         self.accept_button().click()
 
-    def title_label(self):
-        pass
+    def item_name(self):
+        return self.find("h1._9a071_1Ux3M._9a071_3nB--._9a071_1R3g4._9a071_1S3No").text
 
-    def price_label(self):
-        pass
+    def item_price(self):
+        price_div = self.find("div._9a071_1Q_68")
+        return float(price_div.text.replace(" ", "").replace("zł", "").replace(",", "."))
 
-    def delivery_label(self):
-        pass
+    def cart_item_count(self):
+        quantity_div = self.find("div[data-role='cart-quantity']")
+        if quantity_div.text:
+            return int(quantity_div.text)
+        return 0
 
-    def return_label(self):
-        pass
-
-    def add_to_chart_label(self):
+    def add_to_cart_button(self):
         return self.find("#add-to-cart-button")
 
-    def added_to_chart_label(self):
-        return self.find(
-            "button._13q9y._8hkto.mp7g_f6.mnjl_0.mg9e_0.mvrt_0.mj7a_0.mh36_0.mg9e_0.mvrt_0.mj7a_0.mh36_0.mt3o_0")
+    def continue_shopping_button(self):
+        return self.find("button[data-analytics-interaction-label='continueShopping']")
 
-    def add_another_item(self):
-        return self.find_and_wait_for_clickable("div._9a071_2tnYy._9a071_3I3EK._9a071_gW37L._9a071_3H9tX")
+    def go_to_cart_button(self):
+        return self.find("a[data-analytics-interaction-label='goToCart']")
+
+    def quantity_text_box(self):
+        return self.find("input[name='quantity']")
 
     def remove_item(self):
         return self.find_and_wait_for_clickable("div._9a071_2tnYy._9a071_3I3EK._9a071_Gt_oa._9a071_KEY6j")
 
-    def search_button_favorite(self):
-        return self.find("button._9a071_11xZc._9a071_v8v-o._9a071_3mFyK._1lqr7._1a0c6")
+    def add_to_watch_list_button(self):
+        return self.find("button[data-analytics-interaction-label='AddToWatchList']")
 
-    def buy_now_label(self):
-        pass
+    def remove_from_watch_list_button(self):
+        return self.find("button[data-analytics-interaction-label='RemoveFromWatchList']")
 
-    def numbers_of_items_label(self):
+    def is_added_to_watch_list(self):
+        return self._element_exists("button[data-analytics-interaction-label='RemoveFromWatchList']")
+
+    def buy_now_button(self):
         pass
