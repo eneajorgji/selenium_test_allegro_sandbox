@@ -5,7 +5,6 @@ from item_page import ItemPage
 from home_page import HomePage
 from time import time
 
-
 class TestItemPage(TestCase):
     def setUp(self):
         self.driver = Driver.create()
@@ -17,7 +16,7 @@ class TestItemPage(TestCase):
         self.page = self.__get_item_page(6442736754)
         self.page.navigate()
 
-       # TODO Add assert
+        # TODO: dodać assert
 
     def test_add_to_cart_success(self):
         self.page = self.__get_item_page(6442736754)

@@ -20,7 +20,7 @@ class SearchPage(HomePage):  # dziedziczenie z klasy HomePage
         span = self._get_element_if_exists("span._11fdd_39FjG")
         if span:
             return int(span.text.replace(" ", ""))
-        span = self._get_element_if_exists("span[data-role='counter-value']")  # find is there is any users
+        span = self._get_element_if_exists("span[data-role='counter-value']")
         if span:
             return int(span.text.replace(" ", ""))  # change number from 2 000 to 2000
         return 0

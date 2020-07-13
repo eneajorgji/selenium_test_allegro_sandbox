@@ -1,3 +1,5 @@
+import time
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
@@ -24,6 +26,12 @@ class HomePage:
     # waits for the element to be clickable
     def find_and_wait_for_clickable(self, path):
         return self._find_and_wait(path, expected_conditions.element_to_be_clickable)
+
+    def find_and_wait_for_presence(self, path):
+        return self._find_and_wait(path, expected_conditions.presence_of_element_located)
+
+    def wait_until_page_loaded(self):
+        time.sleep(3)
 
     def _get_element_if_exists(self, path):
         element = self.driver.find_elements_by_css_selector(path)
