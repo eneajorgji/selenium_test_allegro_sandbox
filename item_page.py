@@ -49,4 +49,4 @@ class ItemPage(LoginPage):
         return self._element_exists("button[data-analytics-interaction-label='RemoveFromWatchList']")
 
     def buy_now_button(self):
-        pass
+        return self.find("button[id='buy-now-button']")
