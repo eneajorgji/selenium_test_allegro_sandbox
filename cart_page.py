@@ -1,5 +1,4 @@
 from login_page import LoginPage
-
 from selenium import webdriver
 
 
@@ -23,13 +22,13 @@ class CartPage(LoginPage):
         pass
 
     def increase_item_count(self, item_name):
-        pass
+        return self.find("button[data-analytics-interaction-label='increase']")
 
     def decrease_item_count(self, item_name):
-        pass
+        return self.find("button[data-analytics-interaction-label='decrease']")
 
     def go_to_checkout_button(self):
-        pass
+        return self.find("button[class='_13q9y._8tsq7._7qjq4']")
 
     def continue_shopping_button(self):
-        pass
+        return self.find("a[data-analytics-click-label='continueShopping']")
