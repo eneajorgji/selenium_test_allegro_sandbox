@@ -6,6 +6,7 @@ class CartPage(LoginPage):
     def __init__(self, driver: webdriver.Chrome, user_name, password):
         LoginPage.__init__(self, driver, user_name, password)
 
+    # TODO
     def items(self):
         pass
 
@@ -16,8 +17,9 @@ class CartPage(LoginPage):
         return sum(item.compute_total_price for item in self.items())
 
     def remove_item_by_name(self, item_name):
-        pass
+        return self.find("button[data-analytics-interaction-label='remove']")
 
+    # TODO
     def clear(self):
         pass
 
