@@ -16,6 +16,7 @@ class CartPage(LoginPage):
     def compute_total_price(self):
         return sum(item.compute_total_price for item in self.items())
 
+    #TODO recheck this one
     def remove_item_by_name(self, item_name):
         return self.find("button[data-analytics-interaction-label='remove']")
 
@@ -23,9 +24,11 @@ class CartPage(LoginPage):
     def clear(self):
         pass
 
+    # TODO recheck this one
     def increase_item_count(self, item_name):
         return self.find("button[data-analytics-interaction-label='increase']")
 
+    # TODO recheck this one
     def decrease_item_count(self, item_name):
         return self.find("button[data-analytics-interaction-label='decrease']")
 
