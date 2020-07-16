@@ -8,13 +8,13 @@ class CheckoutPage(LoginPage):
         LoginPage.__init__(self, driver, user_name, password)
 
     def first_name_text_box(self):
-        pass
+        return self.find("input[id='firstName_74']")
 
     def last_name_text_box(self):
-        pass
+        return self.find("input[id='lastName_76']")
 
     def company_name_text_box(self):
-        pass
+        return self.find("input[id='']")
 
     def address_text_box(self):
         pass
