@@ -14,28 +14,32 @@ class CheckoutPage(LoginPage):
         return self.find("input[id='lastName_76']")
 
     def company_name_text_box(self):
-        return self.find("input[id='']")
+        return self.find("input[id='company_78']")
 
     def address_text_box(self):
-        pass
+        return self.find("input[id='street_65']")
 
     def post_code_text_box(self):
-        pass
+        return self.find("input[id='zipCode_66']")
 
+    # TODO
     def street_name_text_box(self):
         pass
 
-    def country_combo_box(self):
-        pass
+    def country_combo_box(self, index):
+        return self.find_and_wait_for_clickable(f"input[name='country']{index}")
 
     def phone_number_text_box(self):
-        pass
+        return self.find("input[id='phoneNumber_80']")
 
+    # TODO
     def delivery_method_radio_button(self, index):
         pass
 
+    # TODO
     def payment_method_check(self, index):
         pass
 
+    # TODO
     def finalize_button(self):
         pass
