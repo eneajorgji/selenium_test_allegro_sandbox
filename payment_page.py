@@ -13,4 +13,4 @@ class PaymentPage(HomePage):
         return self.find("input[id='formSubmit']")
 
     def negative_payment_result_button(self):
-        pass
+        return self.find("input[id='formReturn']")
