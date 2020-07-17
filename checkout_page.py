@@ -23,11 +23,11 @@ class CheckoutPage(LoginPage):
         return self.find("input[id='zipCode_66']")
 
     # TODO
-    def street_name_text_box(self):
+    def city_name_text_box(self):
         pass
 
-    def country_combo_box(self, index):
-        return self.find_and_wait_for_clickable(f"input[name='country']{index}")
+    def country_combo_box(self):
+        return self.find_and_wait_for_clickable("input[name='country']")
 
     def phone_number_text_box(self):
         return self.find("input[id='phoneNumber_80']")
