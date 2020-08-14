@@ -41,14 +41,12 @@ class TestItemPage(TestCase):
 
         assert self.page.cart_item_count() == 3
 
-    #TODO Check this.
     def test_add_to_favorite(self):
-        self.page = LoginPage(self.driver, USER_NAME, PASSWORD)
+        self.page = self.__get_item_page(6442736754, True)
         self.page.navigate()
-        self.page.login()
         self.page.add_to_watch_list_button().click()
 
         assert self.page.is_added_to_watch_list()
 
-    def __get_item_page(self, id):
-        return ItemPage(self.driver, USER_NAME, PASSWORD, id)
+    def __get_item_page(self, id, login_before=False):
+        return ItemPage(self.driver, USER_NAME, PASSWORD, id, login_before)

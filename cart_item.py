@@ -1,5 +1,5 @@
 class CartItem:
-    def __init__(self, name, index, count, price):
+    def __init__(self, name=None, index=0, count=0, price=0):
         self.name = name
         self.index = index
         self.count = count

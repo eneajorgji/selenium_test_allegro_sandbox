@@ -12,7 +12,7 @@ class TestSearchManyPage(TestCase):
     def tearDown(self):
         self.driver.quit()
 
-    def test_search_many_success(self):  # szukaj wiele
+    def test_search_many_success(self):
         self.page.navigate()
         self.page.search_many_link().click()
         self.page.search_many_input(0).send_keys("telefon")

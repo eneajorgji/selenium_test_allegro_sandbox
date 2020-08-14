@@ -15,6 +15,21 @@ class TestCartPage(TestCase):
 
     def test_add_to_cart(self):
         self.page.add_to_cart(6442736754, 3)
+        self.page.add_to_cart(6500286757)
         self.page.navigate()
 
-        assert self.page.item_count() == 1
+        assert self.page.item_count() == 4
+        assert self.page.compute_total_price() == 3094.99
+
+    def test_clear_cart(self):
+        self.page.add_to_cart(6442736754, 3)
+        self.page.navigate()
+        self.page.clear_cart()
+
+        assert self.page.item_count() == 0
+
+    def test_clear_after_login(self):
+        self.page = CartPage(self.driver, USER_NAME, PASSWORD, True)
+        self.page.navigate(should_clear_cart=True)
+
+        assert self.page.item_count() == 0

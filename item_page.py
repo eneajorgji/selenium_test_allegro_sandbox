@@ -3,19 +3,16 @@ from login_page import LoginPage
 
 
 class ItemPage(LoginPage):
-    def __init__(self, driver: webdriver.Chrome, user_name, password, id):
+    def __init__(self, driver: webdriver.Chrome, user_name, password, id, login_before=False):
         LoginPage.__init__(self, driver, user_name, password)
         self.id = id
-
-    def navigate(self):
-        self.driver.get(f"https://allegro.pl.allegrosandbox.pl/oferta/{self.id}")
-        self.accept_button().click()
+        self.login_before = login_before
 
     def item_name(self):
-        return self.find("h1._9a071_1Ux3M._9a071_3nB--._9a071_1R3g4._9a071_1S3No").text
+        return self.find("div[data-role='app-container'] h1").text
 
     def item_price(self):
-        price_div = self.find("div._9a071_1Q_68")
+        price_div = self.find("div[data-role='app-container'] div[aria-label]")
         return float(price_div.text.replace(" ", "").replace("zł", "").replace(",", "."))
 
     def cart_item_count(self):
@@ -36,9 +33,6 @@ class ItemPage(LoginPage):
     def quantity_text_box(self):
         return self.find("input[name='quantity']")
 
-    def remove_item(self):
-        return self.find_and_wait_for_clickable("div._9a071_2tnYy._9a071_3I3EK._9a071_Gt_oa._9a071_KEY6j")
-
     def add_to_watch_list_button(self):
         return self.find("button[data-analytics-interaction-label='AddToWatchList']")
 
@@ -50,3 +44,10 @@ class ItemPage(LoginPage):
 
     def buy_now_button(self):
         return self.find("button[id='buy-now-button']")
+
+    def _on_before_navigate(self):
+        if self.login_before:
+            self.login()
+
+    def _on_just_navigate(self):
+        self.driver.get(f"https://allegro.pl.allegrosandbox.pl/oferta/{self.id}")

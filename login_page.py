@@ -10,6 +10,7 @@ class LoginPage(HomePage):
 
     def login(self):
         self.driver.get("https://allegro.pl.allegrosandbox.pl/login/form")
+        self.accept_policy()
         self.user_name_text_box().send_keys(self.user_name)
         self.password_text_box().send_keys(self.password)
         self.login_button().click()
@@ -17,6 +18,7 @@ class LoginPage(HomePage):
 
     def logout(self):
         self.driver.get("https://allegro.pl.allegrosandbox.pl/logout.php")
+        self.accept_policy()
         self.wait_until_page_loaded()
 
     def is_logged_in(self):
