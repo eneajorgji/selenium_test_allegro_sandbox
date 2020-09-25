@@ -14,7 +14,7 @@ class LoginPage(HomePage):
         self.user_name_text_box().send_keys(self.user_name)
         self.password_text_box().send_keys(self.password)
         self.login_button().click()
-        self.wait_until_page_loaded()
+        self.wait_until_page_url_contains("/login/form")
 
     def logout(self):
         self.driver.get("https://allegro.pl.allegrosandbox.pl/logout.php")

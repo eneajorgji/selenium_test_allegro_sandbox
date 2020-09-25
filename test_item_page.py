@@ -1,11 +1,7 @@
 from unittest import TestCase
-
-from selenium.webdriver.common.keys import Keys
-
 from driver import Driver
 from item_page import ItemPage
 from configuration import USER_NAME, PASSWORD
-from login_page import LoginPage
 
 
 class TestItemPage(TestCase):

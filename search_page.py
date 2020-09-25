@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import Select
 import re
 
 
-class SearchPage(HomePage):  # dziedziczenie z klasy HomePage
+class SearchPage(HomePage):
     def __init__(self, driver: webdriver.Chrome):
         HomePage.__init__(self, driver)
 

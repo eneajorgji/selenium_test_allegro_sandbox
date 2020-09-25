@@ -5,21 +5,22 @@ from login_page import LoginPage
 from selenium import webdriver
 
 
-# TODO czyszczenie koszyka po zalogowaniu
 class CartPage(LoginPage):
     def __init__(self, driver: webdriver.Chrome, user_name, password, login_before=False):
         LoginPage.__init__(self, driver, user_name, password)
         self.login_before = login_before
         self.should_clear_cart = False
 
-    def navigate(self, **kwargs):
-        if "should_clear_cart" in kwargs:
-            self.should_clear_cart = kwargs["should_clear_cart"]
+    def navigate(self, should_clear_cart=False, login_before=True):
+        self.should_clear_cart = should_clear_cart
+        self.login_before = login_before
         LoginPage.navigate(self)
 
     def items(self):
         result = []
         anchors = self.find_many("offer-title a._w7z6o._uj8z7")
+        if not anchors:
+            return result
         inputs = self.find_many("input[data-box-name='number-picker']")
         spans = self.find_many("offer-row price div._1svub._1k8lh")
         index = 0
@@ -47,11 +48,12 @@ class CartPage(LoginPage):
         item_page.quantity_text_box().clear()
         item_page.quantity_text_box().send_keys(str(item_count))
         item_page.add_to_cart_button().click()
-        item_page.wait_until_page_loaded()
+        item_page.wait_a_moment()
 
     def go_to_checkout_page(self) -> CheckoutPage:
         self.go_to_checkout_button().click()
         self.wait_until_page_loaded()
+        self.wait_a_moment()
         checkout_page = CheckoutPage(self.driver, self.user_name, self.password)
         return checkout_page
 
@@ -59,7 +61,7 @@ class CartPage(LoginPage):
         self.header_remove_button().click()
         self.remove_all_button().click()
         self.remove_all_confirm_button().click()
-        self.wait_until_page_loaded()  # here must wait asn otherwise will fail
+        self.wait_a_moment()
 
     def header_remove_button(self):
         return self.find_and_wait_for_clickable("button[data-role='header-remove-button']")
@@ -71,7 +73,7 @@ class CartPage(LoginPage):
         return self.find_and_wait_for_clickable("delete-offers-confirm div button:nth-child(2)")
 
     def go_to_checkout_button(self):
-        return self.find("button._13q9y._8tsq7._7qjq4")
+        return self.find("submit-button button span:nth-child(2)")
 
     def continue_shopping_button(self):
         return self.find("a[data-analytics-click-label='continueShopping']")
@@ -82,6 +84,7 @@ class CartPage(LoginPage):
 
     def _on_just_navigate(self):
         self.driver.get("https://allegro.pl.allegrosandbox.pl/koszyk")
+        self.wait_until_page_loaded()
 
     def _on_after_navigate(self):
         if self.should_clear_cart and self.item_count() > 0:

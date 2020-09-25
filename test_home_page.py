@@ -4,7 +4,6 @@ from home_page import HomePage
 
 
 class TestHomePage(TestCase):
-
     def setUp(self):
         self.driver = Driver.create()
         self.page = HomePage(self.driver)

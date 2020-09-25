@@ -1,5 +1,7 @@
 from selenium import webdriver
+from configuration import ELEMENT_NOT_FOUND_EXCEPTION
 from login_page import LoginPage
+from payment_card_form import PaymentCardForm
 from payment_method import PaymentMethod
 
 
@@ -7,50 +9,55 @@ class CheckoutPage(LoginPage):
     def __init__(self, driver: webdriver.Chrome, user_name, password, login_before=False):
         LoginPage.__init__(self, driver, user_name, password)
         self.login_before = login_before
+        self.accept_another_buy()
+
+    def accept_another_buy(self):
+        try:
+            button = self.find("button[ng-click='$ctrl.confirm()']")
+            button.click()
+        except ELEMENT_NOT_FOUND_EXCEPTION:
+            pass
 
     def payment_methods(self):
         result = []
-        paragraphs = self.find_many(
-            "p[class='m-type.m-type--small.m-align-text-center@sm.m-margin-top-0.m-margin-bottom-0.tile-caption']")
+        paragraphs = self.find_many("div[ng-if] p.m-type--small")
+        secondary_paragraphs = self.find_many("div[ng-if] p.m-type--small + p")
         index = 0
-        for paragraph in paragraphs:
+        for paragraph, secondary_paragraphs in zip(paragraphs, secondary_paragraphs):
             method = PaymentMethod()
             method.index = index
+            method.name = paragraph.text
+            method.secondary_name = secondary_paragraphs.text
+            result.append(method)
+            index += 1
         return result
 
-    def first_name_text_box(self):
-        return self.find("input[id='firstName_74']")
+    def payment_method_checkbox(self, index):
+        paragraphs = self.find_many("div[ng-if] p.m-type--small")
+        return paragraphs[index]
 
-    def last_name_text_box(self):
-        return self.find("input[id='lastName_76']")
+    def select_bank_radio(self, index):
+        radios = self.find_many("label.m-choice--align-middle")
+        return radios[index]
 
-    def company_name_text_box(self):
-        return self.find("input[id='company_78']")
+    def show_credit_card_form(self):
+        self.payment_method_checkbox(0).click()
+        form = PaymentCardForm(page=self)
+        return form
 
-    def address_text_box(self):
-        return self.find("input[id='street_65']")
+    def select_installements(self, plan_index):
+        self.payment_method_checkbox(3).click()
+        self.installements_confirm_button().click()
+        self.select_installements_plan(plan_index)
 
-    def post_code_text_box(self):
-        return self.find("input[id='zipCode_66']")
+    def select_installements_plan(self, index):
+        check_boxes = self.find_many("m-soap[mmessageid='installments-limit-message']")
+        check_boxes[index].click()
 
-    # TODO
-    def city_name_text_box(self):
-        pass
+    def installements_confirm_button(self):
+        return self.find("button.m-button--primary[ng-click='modal.confirmSelection()']")
 
-    def country_combo_box(self):
-        return self.find_and_wait_for_clickable("input[name='country']")
-
-    def phone_number_text_box(self):
-        return self.find("input[id='phoneNumber_80']")
-
-    # TODO
-    def delivery_method_radio_button(self, index):
-        pass
-
-    # TODO
-    def payment_method_check(self, index):
-        pass
-
-    # TODO
     def finalize_button(self):
-        pass
+        if self._element_exists("buy-button-label"):
+            return self.find("buy-button-label")
+        return self.find("ng-transclude span")
